@@ -78,6 +78,10 @@ public class HangmanBean extends _Bean
 		return hangman.getChances()==0;
 	}
 	
+	public int getNoOfLetters(){
+		return hangman.getNoOfLetters();
+	}
+	
 	public String getLetter() {
 		return letter;
 	}

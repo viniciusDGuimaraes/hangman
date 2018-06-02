@@ -65,4 +65,8 @@ public class Hangman
 	public List<Character> getInputHistory() {
 		return history;
 	}
+	
+	public int getNoOfLetters(){
+		return currentWord.getNoOfLetters();
+	}
 }

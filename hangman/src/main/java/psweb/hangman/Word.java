@@ -7,14 +7,23 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import org.springframework.util.ResourceUtils;
+
 public class Word 
 {
 	private char[] wordChars;
 	private char[] wordMask;
 	
-	public Word()
-	{
+	public Word(){
 		String word = getRandomWord();
+		this.wordChars = word.toUpperCase().toCharArray();
+		this.wordMask  = new char[wordChars.length];
+		
+		for (int i=0;i<wordMask.length;i++)
+			wordMask[i] = '_';
+	}
+	
+	public Word(String word){
 		this.wordChars = word.toUpperCase().toCharArray();
 		this.wordMask  = new char[wordChars.length];
 		
@@ -24,8 +33,14 @@ public class Word
 
 	public String getRandomWord(){
 		Random num = new Random();
-		String filePath = "/home/vinicius/word_list.txt";
-		File wordList = new File(filePath);
+		File wordList = null;
+		
+		try {
+			wordList = ResourceUtils.getFile("classpath:word_list.txt");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		List<String> words = new ArrayList<String>();
 		Scanner reader = null;
 		
@@ -34,11 +49,12 @@ public class Word
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
+		
 		while(reader.hasNextLine()){
 			words.add(reader.nextLine());
 		}
-
+		
+		reader.close();
 		return words.get(num.nextInt(words.size()));
 	}
 	
@@ -82,4 +98,8 @@ public class Word
 	{
 		return new String(wordChars);
 	}	
+	
+	public int getNoOfLetters(){
+		return wordMask.length;
+	}
 }

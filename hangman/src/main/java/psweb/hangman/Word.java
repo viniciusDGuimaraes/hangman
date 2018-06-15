@@ -11,6 +11,7 @@ import org.springframework.util.ResourceUtils;
 
 public class Word 
 {
+	private static ArrayList<String> words = new ArrayList<String>();
 	private char[] wordChars;
 	private char[] wordMask;
 	
@@ -34,27 +35,28 @@ public class Word
 	public String getRandomWord(){
 		Random num = new Random();
 		File wordList = null;
-		
-		try {
-			wordList = ResourceUtils.getFile("classpath:word_list.txt");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		if(words.isEmpty()){
+			try {
+				wordList = ResourceUtils.getFile("classpath:word_list.txt");
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			
+			Scanner reader = null;
+			
+			try {
+				reader = new Scanner(wordList);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			
+			while(reader.hasNextLine()){
+				words.add(reader.nextLine());
+			}
+			
+			reader.close();
 		}
 		
-		List<String> words = new ArrayList<String>();
-		Scanner reader = null;
-		
-		try {
-			reader = new Scanner(wordList);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		while(reader.hasNextLine()){
-			words.add(reader.nextLine());
-		}
-		
-		reader.close();
 		return words.get(num.nextInt(words.size()));
 	}
 	

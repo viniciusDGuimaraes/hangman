@@ -12,38 +12,56 @@
 	
 		<h:body>
 			<h:form id="form">
-				<h1>The PSWEB Hangman</h1>
-				<hr/>	
-				<h2>Word: <h:outputText value="#{hangmanBean.word}" /></h2>
-				<br/>
-				<h2>Chances: <h:outputText value="#{hangmanBean.chances}" /></h2>
-				<br/>
-				<h2>No. of Letters: <h:outputText value="#{hangmanBean.noOfLetters}" /></h2>
-				<br/>
-				<h2>Attempts: <h:outputText value="#{hangmanBean.attempts}" /></h2>
-				<br/>								
-				Pick a Letter: <p:inputText value="#{hangmanBean.letter}" 
-				                            maxlength="1"
-				                            readonly="#{hangmanBean.gameOver}">
-									<p:ajax event="keyup" update="form" />
-							   </p:inputText>
-				<p:commandButton value="Guess" 
-				                 actionListener="#{hangmanBean.guess()}"
-				                 disabled="#{empty hangmanBean.letter or hangmanBean.gameOver}"
-				                 update="form"/>
-				<p:commandButton value="Reset" 
-				                 actionListener="#{hangmanBean.reset()}"
-				                 update="form"/>		
-				
-				<ui:fragment rendered="#{hangmanBean.gameOver}">
-					<hr/> 
-					<h1>				
-						<h:outputText value="Congratulations, you guessed!" 
-									  rendered="#{hangmanBean.gameWin}"/>
-						<h:outputText value="You are dead, hanged dead..."  
-						              rendered="#{hangmanBean.gameLose}"/>
-					</h1>
-				</ui:fragment>					
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<h1>The PSWEB Hangman</h1>
+						<hr/>
+					</div>
+				</div>
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-2">
+						<img src="home/vinicius/hangman.png" width="150" height="350" alt="hangman"/>
+					</div>
+					<div class="ui-g-12 ui-g-nopad">
+						<div class="ui-g-12">
+							<h2>Word: <h:outputText value="#{hangmanBean.word}" /></h2>
+							<br/>
+						</div>
+						<div class="ui-g-12">
+							<h2>Attempts: <h:outputText value="#{hangmanBean.attempts}" /></h2>
+							<br/>
+						</div>
+						<div class="ui-g-12">
+							Pick a Letter: <p:inputText value="#{hangmanBean.letter}" 
+												maxlength="1"
+												readonly="#{hangmanBean.gameOver}">
+												<p:ajax event="keyup" update="form" />
+											</p:inputText>
+						</div>
+						<div class="ui-g-6 ui-md-1">
+							<p:commandButton value="Guess" 
+											actionListener="#{hangmanBean.guess()}"
+											disabled="#{empty hangmanBean.letter or hangmanBean.gameOver}"
+											update="form"/>
+						</div>
+						<div class="ui-g-6 ui-md-1">
+							<p:commandButton value="Reset" 
+										actionListener="#{hangmanBean.reset()}"
+										update="form"/>
+						</div>
+						<div class="ui-g-12">
+							<ui:fragment rendered="#{hangmanBean.gameOver}">
+								<hr/> 
+								<h1>				
+									<h:outputText value="Congratulations, you guessed!" 
+												rendered="#{hangmanBean.gameWin}"/>
+									<h:outputText value="You are dead, hanged dead..."  
+												rendered="#{hangmanBean.gameLose}"/>
+								</h1>
+							</ui:fragment>
+						</div>
+					</div>
+				</div>
 			</h:form>
 		</h:body>
 	</f:view>

@@ -19,10 +19,10 @@
 					</div>
 				</div>
 				<div class="ui-g">
-					<div class="ui-g-12 ui-md-2">
-						<img src="#{hangmanBean.image}" width="150" height="350" alt="hangman"/>
+					<div class="ui-g-12 ui-md-3 ui-lg-3">
+						<h:graphicImage library="images" name="#{hangmanBean.image}" width="300" height="300" />
 					</div>
-					<div class="ui-g-12 ui-g-nopad">
+					<div class="ui-g-12 ui-md-9 ui-lg-9">
 						<div class="ui-g-12">
 							<h2>Word: <h:outputText value="#{hangmanBean.word}" /></h2>
 							<br/>
@@ -38,13 +38,13 @@
 												<p:ajax event="keyup" update="form" />
 											</p:inputText>
 						</div>
-						<div class="ui-g-6 ui-md-1">
+						<div class="ui-g-3 ui-md-2 ui-lg-1">
 							<p:commandButton value="Guess" 
 											actionListener="#{hangmanBean.guess()}"
 											disabled="#{empty hangmanBean.letter or hangmanBean.gameOver}"
 											update="form"/>
 						</div>
-						<div class="ui-g-6 ui-md-1">
+						<div class="ui-g-3 ui-md-2 ui-lg-1">
 							<p:commandButton value="Reset" 
 										actionListener="#{hangmanBean.reset()}"
 										update="form"/>
@@ -56,6 +56,9 @@
 									<h:outputText value="Congratulations, you guessed!" 
 												rendered="#{hangmanBean.gameWin}"/>
 									<h:outputText value="You are dead, hanged dead..."  
+												rendered="#{hangmanBean.gameLose}"/>
+									<br />
+									<h:outputText value="The word was #{hangmanBean.answer}"  
 												rendered="#{hangmanBean.gameLose}"/>
 								</h1>
 							</ui:fragment>

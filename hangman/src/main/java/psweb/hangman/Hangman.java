@@ -1,5 +1,6 @@
 package psweb.hangman;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,11 @@ public class Hangman
 		return match;
 	}
 	
+	//Retorna a imagem de acordo com a quantidade de chances
+	public String getImage(){
+		return this.chances + "_chances.png";
+	}
+	
 	public boolean isComplete()
 	{
 		return currentWord.isComplete();
@@ -49,7 +55,7 @@ public class Hangman
 	
 	//
 	// Métodos de acesso
-	//
+	//	
 	public int getChances() {
 		return chances;
 	}
@@ -64,9 +70,5 @@ public class Hangman
 	
 	public List<Character> getInputHistory() {
 		return history;
-	}
-	
-	public int getNoOfLetters(){
-		return currentWord.getNoOfLetters();
 	}
 }

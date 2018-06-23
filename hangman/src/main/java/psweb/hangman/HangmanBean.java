@@ -48,9 +48,17 @@ public class HangmanBean extends _Bean
 	//
 	// Métodos de Acesso
 	//
+	public String getImage(){
+		return hangman.getImage();
+	}
+	
 	public String getWord()
 	{
 		return hangman.getWordAsString();
+	}
+	
+	public String getAnswer(){
+		return hangman.getAnswerAsString();
 	}
 	
 	public Integer getChances()
@@ -76,10 +84,6 @@ public class HangmanBean extends _Bean
 	public boolean isGameLose()
 	{
 		return hangman.getChances()==0;
-	}
-	
-	public int getNoOfLetters(){
-		return hangman.getNoOfLetters();
 	}
 	
 	public String getLetter() {

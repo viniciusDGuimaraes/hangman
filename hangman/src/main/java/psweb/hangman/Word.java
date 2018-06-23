@@ -99,9 +99,5 @@ public class Word
 	public String getAnswerAsString()
 	{
 		return new String(wordChars);
-	}	
-	
-	public int getNoOfLetters(){
-		return wordMask.length;
 	}
 }

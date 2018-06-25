@@ -1,8 +1,10 @@
 package psweb.hangman;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 public class Hangman 
 {
@@ -53,6 +55,18 @@ public class Hangman
 		return chances==0 || isComplete(); 
 	}
 	
+	
+	/**
+	 * Verifica se o parametro passado esta zerado, caso sim significa que o tempo esgotou.
+	 * 
+	 * @author Natalia
+	 * @param Interiro que recebe 0 caso o tempo acabar.  
+	 */
+	public boolean isTimeOut(int cron)
+	{
+		return cron==0;
+	}
+	
 	//
 	// Métodos de acesso
 	//	
@@ -71,4 +85,6 @@ public class Hangman
 	public List<Character> getInputHistory() {
 		return history;
 	}
+	
+	
 }

@@ -3,69 +3,100 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
-	<f:view contentType="text/html">
-		<h:head>						
-			<script src="js/geral.js"></script>	
-		</h:head>
-	
-		<h:body>
-			<h:form id="form">
-				<div class="ui-g">
+<f:view contentType="text/html">
+	<h:head>
+		<script src="js/geral.js"></script>
+	</h:head>
+
+	<h:body>
+		<h:form id="form">
+			<div style="display: none;">
+				<p:media
+					value="http://freesound.org/data/previews/162/162157_1236628-lq.mp3"
+					player="quicktime" rendered="#{hangmanBean.control}" />
+			</div>
+			<p:growl id="messages" showDetail="true" sticky="true" />
+
+			<p:idleMonitor timeout="3000">
+				<p:ajax event="idle" listener="#{hangmanBean.onIdle}"
+					update="messages" />
+				<p:ajax event="active" listener="#{hangmanBean.onActive}"
+					update="messages" />
+			</p:idleMonitor>
+
+			<div class="ui-g">
+				<div class="ui-g-12">
+					<h:graphicImage library="images" name="psweb.png" width="100%" height="100%" />
+					<hr />
+				</div>
+			</div>
+
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-12 ui-lg-3">
+					<h:graphicImage library="images" name="#{hangmanBean.image}" width="270" height="270" />
+				</div>
+
+				<div class="ui-g-12 ui-md-12 ui-lg-9">
 					<div class="ui-g-12">
-						<h1>The PSWEB Hangman</h1>
-						<hr/>
+						<h2>Word: <h:outputText value="#{hangmanBean.word}" /></h2>
+						<br/>
 					</div>
-				</div>
-				<div class="ui-g">
-					<div class="ui-g-12 ui-md-3 ui-lg-3">
-						<h:graphicImage library="images" name="#{hangmanBean.image}" width="300" height="300" />
+
+					<div class="ui-g-12">
+						<h2>Attempts: <h:outputText value="#{hangmanBean.attempts}" /></h2>
+						<!-- <h2>teste</h2> -->
+						<br/>
 					</div>
-					<div class="ui-g-12 ui-md-9 ui-lg-9">
-						<div class="ui-g-12">
-							<h2>Word: <h:outputText value="#{hangmanBean.word}" /></h2>
-							<br/>
-						</div>
-						<div class="ui-g-12">
-							<h2>Attempts: <h:outputText value="#{hangmanBean.attempts}" /></h2>
-							<br/>
-						</div>
-						<div class="ui-g-12">
-							Pick a Letter: <p:inputText value="#{hangmanBean.letter}" 
-												maxlength="1"
-												readonly="#{hangmanBean.gameOver}">
-												<p:ajax event="keyup" update="form" />
-											</p:inputText>
-						</div>
-						<div class="ui-g-3 ui-md-2 ui-lg-1">
-							<p:commandButton value="Guess" 
-											actionListener="#{hangmanBean.guess()}"
-											disabled="#{empty hangmanBean.letter or hangmanBean.gameOver}"
-											update="form"/>
-						</div>
-						<div class="ui-g-3 ui-md-2 ui-lg-1">
-							<p:commandButton value="Reset" 
-										actionListener="#{hangmanBean.reset()}"
+
+					<div class="ui-g-12">
+						Pick a Letter: <p:inputText value="#{hangmanBean.letter}" 
+											maxlength="1"
+											readonly="#{hangmanBean.gameOver}">
+											<p:ajax event="keyup" update="form" />
+										</p:inputText>
+					</div>
+
+					<div class="ui-g-6 ui-md-4 ui-lg-2">
+						<p:commandButton value="Guess" 
+										actionListener="#{hangmanBean.guess()}"
+										disabled="#{empty hangmanBean.letter or hangmanBean.gameOver}"
 										update="form"/>
-						</div>
-						<div class="ui-g-12">
-							<ui:fragment rendered="#{hangmanBean.gameOver}">
-								<hr/> 
-								<h1>				
-									<h:outputText value="Congratulations, you guessed!" 
-												rendered="#{hangmanBean.gameWin}"/>
-									<h:outputText value="You are dead, hanged dead..."  
-												rendered="#{hangmanBean.gameLose}"/>
-									<br />
-									<h:outputText value="The word was #{hangmanBean.answer}"  
-												rendered="#{hangmanBean.gameLose}"/>
-								</h1>
-							</ui:fragment>
-						</div>
+					</div>
+
+					<div class="ui-g-6 ui-md-4 ui-lg-2">
+						<p:commandButton value="Reset" 
+									actionListener="#{hangmanBean.reset()}"
+									update="form"/>
+					</div>
+					
+					<br />
+					
+					<div class = "ui-g-12">
+						<pe:timer timeout="#{hangmanBean.cronometro}" singleRun="true"
+				        	listener="#{hangmanBean.setCronometro2(0)}" format="HH:mm:ss"
+							ignoreAutoUpdate="false" update="form" />
+					</div>
+
+					<div class="ui-g-12">
+						<ui:fragment rendered="#{hangmanBean.gameOver}">
+							<hr/> 
+							<h1>				
+								<h:outputText value="Congratulations, you guessed!" 
+											rendered="#{hangmanBean.gameWin}"/>
+								<h:outputText value="You are dead, hanged dead..."  
+											rendered="#{hangmanBean.gameLose}"/>
+								<br />
+								<h:outputText value="The word was #{hangmanBean.answer}"  
+											rendered="#{hangmanBean.gameLose}"/>
+							</h1>
+						</ui:fragment>
 					</div>
 				</div>
-			</h:form>
-		</h:body>
-	</f:view>
+			</div>
+		</h:form>
+	</h:body>
+</f:view>
 </html>

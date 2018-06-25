@@ -1,7 +1,9 @@
 package psweb.hangman;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,9 @@ public class HangmanBean extends _Bean
 	// Atributos
 	//
 	private Hangman hangman;
+	private boolean ControlSounds = false;
+	private int 	cronometro 	  = 10; //Contador de segundos para perder o jogo
+	private int 	cronometro2   = 1;  //Contador para Time acabar
 	
 	//
 	// Campos do Formulário
@@ -35,14 +40,23 @@ public class HangmanBean extends _Bean
 	public void guess()
 	{
 		char chr = letter.toCharArray()[0];
-		hangman.input(chr);
+		ControlSounds = hangman.input(chr);
 		letter = "";
+		
+		// Controle de audio para letras erradas
+		if (ControlSounds == false){
+			ControlSounds = true;
+		}else{
+			ControlSounds = false;
+		}
 	}
 	
 	public void reset()
 	{
 		hangman.reset();
 		letter = "";
+		cronometro = 10;
+		cronometro2 = 1; 
 	}
 	
 	//
@@ -73,7 +87,17 @@ public class HangmanBean extends _Bean
 	
 	public boolean isGameOver()
 	{
-		return hangman.isGameOver();
+		return hangman.isGameOver() || isTimeOut();
+	}
+	
+	/**
+	 * Metodo que verifica se o tempo acabou.
+	 * 
+	 * @author Natalia
+	 */
+	public boolean isTimeOut()
+	{
+		return hangman.isTimeOut(cronometro2);
 	}
 	
 	public boolean isGameWin()
@@ -83,16 +107,60 @@ public class HangmanBean extends _Bean
 	
 	public boolean isGameLose()
 	{
-		return hangman.getChances()==0;
+		return hangman.getChances()==0 || isTimeOut();
 	}
 	
-	public String getLetter() {
+	public String getLetter() 
+	{
 		return letter;
 	}
 	
-	public void setLetter(String letter) {
+	public void setLetter(String letter) 
+	{
 		this.letter = letter;
 	}
+	
+	/**
+	 * Interatividade de inatividade 
+	 */
+	public void onIdle() 
+	{
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                                        "Vamos.", "Esta pensando ou sera que desistiu?"));
+    }
+ 
+	/**
+	 * Interatividade de inatividade
+	 */
+    public void onActive() 
+    {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                        "Muito bem!", "Mas seu tempo ainda esta acabando!"));
+    }
+    
+    public boolean isControl()
+    {
+    	return ControlSounds;
+    	
+    }
+
+	public int getCronometro() {
+		return cronometro;
+	}
+
+	public void setCronometro(int cronometro) {
+		this.cronometro = cronometro;
+	}
+	
+	public int getCronometro2() {
+		return cronometro2;
+	}
+
+	public void setCronometro2(int cronometro) {
+		this.cronometro2 = cronometro;
+	}
+    
+   
 }  
 
 

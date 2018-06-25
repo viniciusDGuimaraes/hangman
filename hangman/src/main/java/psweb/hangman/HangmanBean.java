@@ -17,8 +17,8 @@ public class HangmanBean extends _Bean
 	//
 	private Hangman hangman;
 	private boolean ControlSounds = false;
-	private int 	cronometro 	  = 10; //Contador de segundos para perder o jogo
-	private int 	cronometro2   = 1;  //Contador para Time acabar
+	private int 	cronometro 	  = 10;
+	private int 	cronometro2   = 1;
 	
 	//
 	// Campos do Formulário
@@ -40,7 +40,7 @@ public class HangmanBean extends _Bean
 	public void guess()
 	{
 		char chr = Character.toUpperCase(letter.toCharArray()[0]);
-		if(chr>=65 && chr<=90){
+		if(chr>=65 && chr<=90 && !(hangman.getInputHistory().contains(chr))){
 			ControlSounds = hangman.input(chr);
 			letter = "";
 			

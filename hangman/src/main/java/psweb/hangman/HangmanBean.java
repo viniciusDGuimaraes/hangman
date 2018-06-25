@@ -39,15 +39,17 @@ public class HangmanBean extends _Bean
 	//
 	public void guess()
 	{
-		char chr = letter.toCharArray()[0];
-		ControlSounds = hangman.input(chr);
-		letter = "";
-		
-		// Controle de audio para letras erradas
-		if (ControlSounds == false){
-			ControlSounds = true;
-		}else{
-			ControlSounds = false;
+		char chr = Character.toUpperCase(letter.toCharArray()[0]);
+		if(chr>=65 && chr<=90){
+			ControlSounds = hangman.input(chr);
+			letter = "";
+			
+			// Controle de audio para letras erradas
+			if (ControlSounds == false){
+				ControlSounds = true;
+			}else{
+				ControlSounds = false;
+			}
 		}
 	}
 	
